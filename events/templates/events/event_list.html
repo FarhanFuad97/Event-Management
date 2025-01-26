@@ -1,0 +1,48 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto p-6">
+    
+    <h2 class="text-3xl font-semibold text-gray-800 mb-6">Event List</h2>
+
+    
+    <div class="mb-4">
+        <a href="{% url 'event_create' %}" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300">Create New Event</a>
+    </div>
+
+    
+    <div class="overflow-x-auto bg-white shadow-lg rounded-lg">
+        <table class="min-w-full table-auto">
+            <thead class="bg-gray-100">
+                <tr>
+                    <th class="px-6 py-3 text-left text-sm font-medium text-gray-700 uppercase">Event Name</th>
+                    <th class="px-6 py-3 text-left text-sm font-medium text-gray-700 uppercase">Date</th>
+                    <th class="px-6 py-3 text-left text-sm font-medium text-gray-700 uppercase">Time</th>
+                    <th class="px-6 py-3 text-left text-sm font-medium text-gray-700 uppercase">Category</th>
+                    <th class="px-6 py-3 text-left text-sm font-medium text-gray-700 uppercase">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+                {% for event in events %}
+                    <tr>
+                        <td class="px-6 py-4 text-sm text-gray-900">{{ event.name }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-600">{{ event.date }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-600">{{ event.time }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-600">{{ event.category.name }}</td>
+                        <td class="px-6 py-4 text-sm">
+                            
+                            <a href="{% url 'event_update' event.pk %}" class="text-blue-500 hover:text-blue-700">Edit</a>
+                            <a href="{% url 'event_delete' event.pk %}" class="text-red-500 hover:text-red-700">Delete</a>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="5" class="px-6 py-4 text-center text-gray-600">No events found</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %} 

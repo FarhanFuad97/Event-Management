@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto p-6">
+    
+    <h2 class="text-3xl font-semibold text-gray-800 mb-6">{{ form.instance.pk|yesno:"Update Event,Create Event" }}</h2>
+
+    <!-- Event Form -->
+    <form method="post" class="bg-white p-6 rounded-lg shadow-lg">
+        {% csrf_token %}
+        
+        
+        <div class="mb-4">
+            <label for="id_name" class="block text-sm font-medium text-gray-700">Event Name</label>
+            <input type="text" name="name" id="id_name" placeholder="Enter your name..." class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
+        </div>
+
+        
+        <div class="mb-4">
+            <label for="id_description" class="block text-sm font-medium text-gray-700">Description</label>
+            <textarea name="description" placeholder="Enter your Description..."  id="id_description" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"></textarea>
+        </div>
+
+        
+        <div class="mb-4">
+            <label for="id_date" class="block text-sm font-medium text-gray-700">Event Date</label>
+            <input type="date" name="date" id="id_date" value="{{ form.date.value }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
+        </div>
+
+        
+        <div class="mb-4">
+            <label for="id_time" class="block text-sm font-medium text-gray-700">Event Time</label>
+            <input type="time" name="time" id="id_time" value="{{ form.time.value }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
+        </div>
+
+        
+        <div class="mb-4">
+            <label for="id_location" class="block text-sm font-medium text-gray-700">Location</label>
+            <input type="text" name="location" id="id_location" placeholder="Enter your Location..." class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
+        </div>
+
+        
+        <div class="mb-4">
+            <label for="id_category" class="block text-sm font-medium text-gray-700">Category</label>
+            <select name="category" id="id_category" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                {% for category in form.category.field.queryset %}
+                    <option value="{{ category.pk }}" {% if form.category.value == category.pk %} selected {% endif %}>{{ category.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        
+        <div class="mt-6 flex justify-end">
+            <button type="submit" class="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300">
+                Save
+            </button>
+        </div>
+    </form>
+
+    <!-- Cancel Button -->
+    <div class="mt-4">
+        <a href="{% url 'event_list' %}" class="text-gray-500 hover:text-gray-700">Cancel</a>
+    </div>
+</div>
+{% endblock %}
+
+
+
+
+
+

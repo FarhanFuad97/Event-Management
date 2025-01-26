@@ -1,0 +1,68 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<div class="bg-white p-6 rounded-lg shadow-lg">
+    <h1 class="text-2xl font-bold">Organizer Dashboard</h1>
+
+    <!--- Stats Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-5">
+        <div class="bg-blue-500 text-white p-4 rounded-lg cursor-pointer">
+            <h2 class="text-lg font-semibold">Total Events</h2>
+            <p class="text-3xl">{{ total_events }}</p>
+        </div>
+        <div class="bg-green-500 text-white p-4 rounded-lg cursor-pointer">
+            <h2 class="text-lg font-semibold">Upcoming Events</h2>
+            <p class="text-3xl">{{ upcoming_events }}</p>
+        </div>
+        <div class="bg-red-500 text-white p-4 rounded-lg cursor-pointer">
+            <h2 class="text-lg font-semibold">Past Events</h2>
+            <p class="text-3xl">{{ past_events }}</p>
+        </div>
+        <div class="bg-yellow-500 text-white p-4 rounded-lg">
+            <h2 class="text-lg font-semibold">Total Participants</h2>
+            <p class="text-3xl">{{ total_participants }}</p>
+        </div>
+    </div>
+
+    <!-- Today's Events -->
+    <h2 class="text-xl font-semibold mt-6">Today's Events</h2>
+    <ul class="list-disc pl-5">
+        {% for event in todays_events %}
+            <li>{{ event.name }} at {{ event.time }}</li>
+        {% empty %}
+            <li>No events today</li>
+        {% endfor %}
+    </ul>
+
+    <!-- Event Filtering Form -->
+    <h2 class="text-xl font-semibold mt-6">Filtered Events</h2>
+    <form method="get" class="mb-5">
+        <div class="flex gap-4">
+            <button type="submit" name="filter" value="all" class="bg-blue-500 text-white p-2 rounded-md">
+                All Events
+            </button>
+            <button type="submit" name="filter" value="upcoming" class="bg-green-500 text-white p-2 rounded-md">
+                Upcoming Events
+            </button>
+            <button type="submit" name="filter" value="past" class="bg-red-500 text-white p-2 rounded-md">
+                Past Events
+            </button>
+        </div>
+    </form>
+
+    <!-- Filtered Event List -->
+    <div id="event-list">
+        {% for event in filtered_events %}
+            <div class="bg-gray-100 p-3 my-2 rounded">
+                <h3 class="font-bold">{{ event.name }}</h3>
+                <p>{{ event.date }} at {{ event.time }}</p>
+            </div>
+        {% empty %}
+            <p>No events match the selected filter.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %} 
+
+
+
