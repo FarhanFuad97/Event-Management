@@ -1,11 +1,6 @@
 from django.urls import path
 from . import views
-from events.views import organizer_dashboard  
 
-urlpatterns = [
-    path('', organizer_dashboard, name='organizer_dashboard'),
-    
-]
 
 urlpatterns = [
     # Category URLs...............

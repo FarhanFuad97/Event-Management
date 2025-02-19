@@ -2,8 +2,15 @@ from django.shortcuts import render, redirect
 from events.models import Event, Participant, Category
 from events.forms import EventForm, ParticipantForm, CategoryForm
 from django.utils.timezone import now
+from django.contrib.auth.decorators import user_passes_test, login_required,permission_required
+from users.views import is_admin
+def is_organizer(user):
+    return user.groups.filter(name='Organizer').exists()
 
+def is_Participant(user):
+    return user.groups.filter(name='Participant').exists()
 
+@user_passes_test(is_organizer, login_url='no-permission')
 def organizer_dashboard(request):
     total_participants = Participant.objects.count()
     total_events = Event.objects.count()
@@ -39,10 +46,13 @@ def organizer_dashboard(request):
     return render(request, 'dashboard.html', context)
 
 # ///--- Category CRUD ---///
+# @login_required
+# @permission_required("events.view_event",login_url ='no-permission')
 def category_list(request):
     categories = Category.objects.all()
     return render(request, 'events/category_list.html', {'categories': categories})
-
+@login_required
+@permission_required("events.add_event",login_url ='no-permission')
 def category_create(request):
     if request.method == "POST":
         form = CategoryForm(request.POST)
@@ -53,7 +63,8 @@ def category_create(request):
         form = CategoryForm()
     return render(request, 'events/category_form.html', {'form': form})
 
-
+@login_required
+@permission_required("events.change_event",login_url ='no-permission')
 def category_update(request, pk):
     category = Category.objects.get(pk=pk)
     if request.method == "POST":
@@ -65,7 +76,8 @@ def category_update(request, pk):
         form = CategoryForm(instance=category)
     return render(request, 'events/category_form.html', {'form': form})
 
-
+@login_required
+@permission_required("events.delete_event",login_url ='no-permission')
 def category_delete(request, pk):
     category = Category.objects.get(pk=pk)
     if request.method == "POST":
@@ -79,6 +91,8 @@ def event_list(request):
     events = Event.objects.all()
     return render(request, 'events/event_list.html', {'events': events})
 
+@login_required
+@permission_required("events.add_event",login_url ='no-permission')
 def event_create(request):
     if request.method == "POST":
         form = EventForm(request.POST)
@@ -89,7 +103,8 @@ def event_create(request):
         form = EventForm()
     return render(request, 'events/event_form.html', {'form': form})
 
-
+@login_required
+@permission_required("events.change_event",login_url ='no-permission')
 def event_update(request, pk):
     event = Event.objects.get(pk=pk) 
     if request.method == "POST":
@@ -101,7 +116,8 @@ def event_update(request, pk):
         form = EventForm(instance=event)
     return render(request, 'events/event_form.html', {'form': form})
 
-
+@login_required
+@permission_required("events.delete_event",login_url ='no-permission')
 def event_delete(request, pk):
     event = Event.objects.get(pk=pk) 
     if request.method == "POST":
@@ -111,6 +127,8 @@ def event_delete(request, pk):
 
 
 # ///--- Participant CRUD ---///
+# @login_required
+# @permission_required("events.view_event",login_url ='no-permission')
 def participant_list(request):
     participants = Participant.objects.all()
     return render(request, 'events/participant_list.html', {'participants': participants})
@@ -151,9 +169,24 @@ def participant_delete(request, pk):
 
 
 
+from django.shortcuts import render
+
+def home_view(request):
+    return render(request, "home.html") 
 
 
 
+from django.shortcuts import redirect
+@login_required
+def dashboard(request):
+    if is_organizer(request.user):
+        return redirect('organizer_dashboard')
+    elif is_admin(request.user):
+        return redirect('admin-dashboard')
+    elif is_Participant(request.user):
+        return redirect('event_list')
+    return redirect('no-permission')
+    
 
 
 

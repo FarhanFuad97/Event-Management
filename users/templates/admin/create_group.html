@@ -1,0 +1,26 @@
+{% extends "admin/dashboard.html" %}
+{% block content %}
+   <div class="max-w-4xl mx-auto bg-white p-8 shadow-lg rounded-lg">
+      <h2 class="text-2xl font-semibold text-gray-800 mb-6">Assign Role</h2>
+      <ul>
+        {% for message in messages %}
+        <li class='bg-green-600 text-white px-1 py-2'>{{message}}</li>
+        {% endfor %}
+      </ul>
+      <form method="POST" class="space-y-4">
+          {% csrf_token %}
+          <div class="grid grid-cols-1 gap-4">
+              <div>
+                  {{ form }}
+              </div>
+          </div>
+          <div class="flex justify-end">
+              <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">Create Group</button>
+          </div>
+      </form>
+   </div>
+{% endblock content %}
+
+
+
+

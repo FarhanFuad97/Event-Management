@@ -10,18 +10,25 @@
 </head>
 <body class="bg-gray-100 text-gray-900">
     <!-- Nav Bar -->
-    <nav class="bg-blue-600 p-4 shadow-lg ">
+    <nav class="bg-blue-600 p-4 shadow-lg">
         <div class="container mx-auto flex justify-between">
-            <a href="{% url 'organizer_dashboard' %}" class="text-white text-lg font-bold">Event Management</a>
+            <a href="{% url 'home' %}" class="text-white text-lg font-bold">Event Management</a>
             <div>
-                <a href="{% url 'organizer_dashboard' %}" class="text-white mx-2">Dashboard</a>
+                <a href="{% url 'home' %}" class="text-white mx-2">Home</a>
+                <a href="{% url 'dashboard' %}" class="text-white mx-2">Dashboard</a>
                 <a href="{% url 'event_list' %}" class="text-white mx-2">Events</a>
                 <a href="{% url 'category_list' %}" class="text-white mx-2">Categories</a>
                 <a href="{% url 'participant_list' %}" class="text-white mx-2">Participants</a>
-            </div>    
+                
+                {% if user.is_authenticated %}
+                    <a href="{% url 'logout' %}" class="text-white mx-2">Logout</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="text-white mx-2">Sign In</a>
+                    <a href="{% url 'signup' %}" class="text-white mx-2">Sign Up</a>
+                {% endif %}
+            </div>
         </div>
     </nav>
-
     <div class="container mx-auto mt-5 p-5">
         {% block content %}{% endblock %}
     </div>
