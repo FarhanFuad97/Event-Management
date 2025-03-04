@@ -1,5 +1,5 @@
 from django.urls import path
-from users.views import signup_view, login_view, logout_view,activate_user, admin_dashboard, assign_role,create_group, group_list, no_permission
+from users.views import signup_view, login_view,activate_user, logout_view, admin_dashboard, assign_role,create_group, group_list, no_permission
 
 
 urlpatterns = [
