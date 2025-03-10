@@ -1,6 +1,12 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User, Permission, Group
+from django.contrib.auth.forms import UserCreationForm , PasswordResetForm, SetPasswordForm
+from django.contrib.auth.models import  Permission, Group
+from users.models import CustomUser
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
+
+ 
 
 class SignupForm(UserCreationForm):
     first_name = forms.CharField(max_length=30, required=True)
@@ -35,7 +41,22 @@ class CreateGroupForm(forms.ModelForm):
 
     class Meta:
         model = Group
-        fields = ['name', 'permissions']    
+        fields = ['name', 'permissions'] 
+
+
+
+
+class CustomPasswordResetForm(PasswordResetForm):
+    pass
+
+class CustomPasswordResetConfirmForm(SetPasswordForm):
+    pass
+
+   
+class EditProfileForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ["first_name", "last_name", "profile_image", "phone"]
 
 
 

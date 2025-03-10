@@ -29,8 +29,12 @@ SECRET_KEY = 'django-insecure-e4lb_571*hmh!i-)c5j(-=_nf^dv$e+_i0gktqj$#9#hfmq5(1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# ALLOWED_HOSTS = ['*']
+# CSRF_TRUSTED_ORIGINS = ['https://*.onrender.com', 'http://127.0.0.1:8000']
 ALLOWED_HOSTS = ['*']
 CSRF_TRUSTED_ORIGINS = ['https://*.onrender.com', 'http://127.0.0.1:8000']
+
+AUTH_USER_MODEL = 'users.CustomUser'
 
 
 # Application definition
@@ -88,21 +92,17 @@ WSGI_APPLICATION = 'event_management.wsgi.application'
 # }
 
 
-# DATABASES = {
-#     'default': dj_database_url.config(
-#         # Replace this value with your local database's connection string.
-#         default='postgresql://event_management_db_w3hw_user:Zmg5vsVlI6Fh8gMWmlHYXyDsJfIo0oZ3@dpg-cub4ii52ng1s73am2dkg-a.oregon-postgres.render.com/event_management_db_w3hw',
-#         conn_max_age=600
-#     )
-# }
+
+
 
 DATABASES = {
     'default': dj_database_url.config(
         # Replace this value with your local database's connection string.
-        default='postgresql://event_management_db_qyco_user:YwOa4dirptzrOtnnTuYxcJBgG2Auwz7C@dpg-cv2mo4tumphs739sf2n0-a.oregon-postgres.render.com/event_management_db_qyco',
+        default='postgresql://event_management_database_9enj_user:uDzAsdrFf32cjcCsctAVk1jFM5MiAEFz@dpg-cv78dg8gph6c73ds310g-a.oregon-postgres.render.com/event_management_database_9enj',
         conn_max_age=600
     )
 }
+
 
 
 # #For PgAdmin.......
@@ -146,7 +146,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Dhaka'
 
 USE_I18N = True
 
@@ -161,6 +161,9 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -188,6 +191,7 @@ EMAIL_HOST_PASSWORD = "dney fsso qcjr nzhq"
 
 
 # FRONTEND_URL = "http://127.0.0.1:8000" 
+
 
 FRONTEND_URL = "http://127.0.0.1:8000" 
 
